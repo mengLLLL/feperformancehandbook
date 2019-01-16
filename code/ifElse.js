@@ -1,4 +1,4 @@
-
+var Benchmark = require('benchmark');
 function ifElse(month){
     if(month === 1 ||
         month === 3 ||
@@ -60,9 +60,21 @@ function switchCase(month) {
             return 29
     }
 }
+
+
+function test() {
+    var suite = new Benchmark.Suite
+    suite.add('ifElse', function() {
+        ifElse()
+    }).add('objectType', function() {
+        objectType()
+    }).add('switchCase', function() {
+        switchCase()
+    }).on('cycle', function(event) {
+        console.log(String(event.target))
+    }).run({'async': true})
+}
+
 module.exports = {
-    ifElse,
-    objectType,
-    switchCase,
-    objectFntype
+    test
 }
