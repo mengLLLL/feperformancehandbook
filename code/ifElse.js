@@ -1,4 +1,3 @@
-var Benchmark = require('benchmark');
 
 function howManyDays(month){
     if(month === 1 ||
@@ -26,13 +25,16 @@ function howManyDays2(month){
     return table[month]
 }
 
-export default bench = new Benchmark(
-    'tableTest',
+function howManyDays3(month) {
+    const monthObject = {
+        1: 31, 3: 31, 5: 31, 7: 31, 8: 31, 10: 31, 12:31,
+        4: 30, 6:30, 9: 30, 11: 30,
+        2: 29
+    }
+    return monthObject[month]
+}
+module.exports = {
+    howManyDays,
     howManyDays2,
-)
-
-bench.run() // 开始测试
-
-console.log(bench.hz) // 每秒运行数
-console.log(bench.stats.moe) // 出错边界
-console.log(bench.stats.variance) // 样本方差
+    howManyDays3
+}
