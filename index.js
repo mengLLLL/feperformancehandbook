@@ -1,10 +1,12 @@
 var Benchmark = require('benchmark');
 
 var ifElse = require('./code/ifElse')
+var testFor = require('./code/for')
 
 var bench = new Benchmark(
     'tableTest',
-    ifElse.howManyDays3,
+    // ifElse.howManyDays3
+    testFor.testFor5
 )
 
 
