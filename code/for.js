@@ -1,46 +1,67 @@
 // 测试影响for循环的因素
 var Benchmark = require('benchmark');
 
-const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+// 制作测试变量
+let testArrs = []
+let i = 0
+while (i < 400000) {
+  testArrs.push(i)
+  i ++
+}
 
-function testFor1() {
-  for (let i = 0; i < arr.length; i++) {
-    // console.log(arr[i])
+// 编写相应测试方法
+// 没有声明变量的for循环
+function testNoDeclare() {
+  let newArrs = []
+  for (let i = 0; i < testArrs.length; i++) {
+    newArrs.push(i)
   }
 }
 
-function testFor2() {
-  for (let i = 0, len = arr.length; i < len; i++) {
-    // console.log(arr[i])
+// 声明变量的for循环
+function testUseDeclare() {
+  let newArrs = []
+  for (let i = 0, len = testArrs.length; i < len; i++) {
+    newArrs.push(i)
   }
 }
 
-function testFor3() {
-  for (let i in arr) {
-    // console.log(arr[i])
+// for...in
+function testForIn() {
+  let newArrs = []
+  for (let i in testArrs) {
+    newArrs.push(i)
   }
 }
 
-function testFor4() {
-  arr.forEach((data) => {
-    // console.log(data)
+// forEach
+function testForEach() {
+  let newArrs = []
+  testArrs.forEach((data) => {
+    newArrs.push(data)
   })
 }
 
-function testFor5() {
-  for(let data of arr) {
-    // console.log(data)
+// for...of
+function testForOf() {
+  let newArrs = []
+  for(let data of testArrs) {
+    newArrs.push(data)
   }
 }
 
 function test() {
     var suite = new Benchmark.Suite
-    suite.add('testFor1', function() {
-        testFor1()
-    }).add('testFor2', function() {
-        testFor2()
-    }).add('testFor3', function() {
-        testFor3()
+    suite.add('testNoDeclare', function() {
+      testNoDeclare()
+    }).add('testUseDeclare', function() {
+      testUseDeclare()
+    }).add('testForIn', function() {
+      testForIn()
+    }).add('testForEach', function() {
+      testForEach()
+    }).add('testForOf',function() {
+      testForOf()
     }).on('cycle', function(event) {
         console.log(String(event.target))
     }).run({'async': true})
