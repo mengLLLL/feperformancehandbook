@@ -25,22 +25,6 @@ function objectType(month){
     return table[month]
 }
 
-
-const objectFntype = {
-    1: () => { return 31 },
-    2: () => { return 29 },
-    3: () => { return 31 },
-    4: () => { return 30 },
-    5: () => { return 31 },
-    6: () => { return 30 },
-    7: () => { return 31 },
-    8: () => { return 31 },
-    9: () => { return 30 },
-    10: () => { return 31 },
-    11: () => { return 30 },
-    12: () => { return 31 },
-}
-
 function switchCase(month) {
     switch (month) {
         case 1:
@@ -58,21 +42,29 @@ function switchCase(month) {
             return 31;
         case 2:
             return 29
+        default:
+            return 30
     }
 }
 
 
+function onComplete(e) {
+    console.log('执行速度', String(e.target))
+    console.log('出错边界', e.currentTarget.stats.moe)
+}
+
 function test() {
     var suite = new Benchmark.Suite
-    suite.add('ifElse', function() {
-        ifElse()
-    }).add('objectType', function() {
-        objectType()
-    }).add('switchCase', function() {
-        switchCase()
-    }).on('cycle', function(event) {
-        console.log(String(event.target))
-    }).run({'async': true})
+    suite.add('ifElse', () =>  ifElse(), {
+        'onComplete': (e) => onComplete(e)
+    })
+    .add('objectType', () => objectType(), {
+        'onComplete': (e) => onComplete(e)
+    })
+    .add('switchCase', () => switchCase(), {
+        'onComplete': (e) => onComplete(e)
+    })
+    .run({'async': true})
 }
 
 module.exports = {
