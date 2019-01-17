@@ -17,15 +17,29 @@ function concatConnect() {
   // console.log(str)
 }
 
+// 使用模版字符串
+function templateConnect() {
+  var str = `${str1}${str2}`
+  // console.log(str)
+}
+
+function onComplete(e) {
+  console.log('执行速度', String(e.target))
+  console.log('出错边界', e.currentTarget.stats.moe)
+}
+
 function test() {
   var suite = new Benchmark.Suite
-  suite.add('plussignConnect', function() {
-    plussignConnect()
-  }).add('concatConnect', function() {
-    concatConnect()
-  }).on('cycle', function(event) {
-    console.log(String(event.target))
-  }).run({'async': true})
+  suite.add('plussignConnect', () => plussignConnect(), {
+    'onComplete': (e) => onComplete(e)
+  })
+  .add('concatConnect', () => concatConnect(), {
+    'onComplete': (e) => onComplete(e)
+  })
+  .add('templateConnect', () => templateConnect(), {
+    'onComplete': (e) => onComplete(e)
+  })
+  .run({'async': true})
 }
 
 module.exports = {

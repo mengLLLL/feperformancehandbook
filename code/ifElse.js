@@ -16,6 +16,10 @@ function ifElse(month){
     }
 }
 
+function ternary(month) {
+    return (month === 1 || month === 3 || month === 5 || month === 7 || month === 8 || month === 10 || month === 12) ? 31 : (month === 2 ? 29 : 30)
+}
+
 function objectType(month){
     const table = {
         1: 31, 3: 31, 5: 31, 7: 31, 8: 31, 10: 31, 12:31,
@@ -56,6 +60,9 @@ function onComplete(e) {
 function test() {
     var suite = new Benchmark.Suite
     suite.add('ifElse', () =>  ifElse(), {
+        'onComplete': (e) => onComplete(e)
+    })
+    .add('ternary', () => ternary(), {
         'onComplete': (e) => onComplete(e)
     })
     .add('objectType', () => objectType(), {
