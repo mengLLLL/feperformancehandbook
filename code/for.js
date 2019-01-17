@@ -50,21 +50,29 @@ function testForOf() {
   }
 }
 
+function onComplete(e) {
+  console.log('执行速度', String(e.target))
+  console.log('出错边界', e.currentTarget.stats.moe)
+}
+
 function test() {
     var suite = new Benchmark.Suite
-    suite.add('testNoDeclare', function() {
-      testNoDeclare()
-    }).add('testUseDeclare', function() {
-      testUseDeclare()
-    }).add('testForIn', function() {
-      testForIn()
-    }).add('testForEach', function() {
-      testForEach()
-    }).add('testForOf',function() {
-      testForOf()
-    }).on('cycle', function(event) {
-        console.log(String(event.target))
-    }).run({'async': true})
+    suite.add('testNoDeclare', () => testNoDeclare(), {
+      'onComplete': (e) => onComplete(e)
+    })
+    .add('testUseDeclare', () => testUseDeclare(), {
+      'onComplete': (e) => onComplete(e)
+    })
+    .add('testForIn', () => testForIn(), {
+      'onComplete': (e) => onComplete(e)
+    })
+    .add('testForEach', () => testForEach(), {
+      'onComplete': (e) => onComplete(e)
+    })
+    .add('testForOf', () => testForOf(), {
+      'onComplete': (e) => onComplete(e)
+    })
+    .run({'async': true})
 }
 
 module.exports = {
