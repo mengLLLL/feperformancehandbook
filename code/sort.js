@@ -24,6 +24,7 @@ function BubbleSort() {
 
 /**
  * 选择排序
+ * 找到最大（小）的元素放到排好序的数组末尾
  */
 function SelectSort() {
     let arr = [2, 3, 1, 6, 5, 9, 12]
@@ -45,6 +46,7 @@ function SelectSort() {
 
 /**
  * 插入排序
+ * 把某个元素插入到已经排好序的数组中
  */
 function InsertSort() {
     let arr = [2, 3, 1, 6, 5, 9, 12]
@@ -52,7 +54,7 @@ function InsertSort() {
     for (i; i< arr.length; i++) {
         let waitInsert = arr[i] // 待插入的数值
         let j = i
-        while(j > 0 && arr[j-1] < waitInsert) { // 移动
+        while(j > 0 && arr[j-1] < waitInsert) { // 全员往后移动
             arr[j] = arr[j-1]
             j--
         }
